@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from "react"
-import {createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+import {createUserWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth'
 //onAuthStateChanged is trigered every time there is change in auth state
 import {auth} from "./firebase-config"
 
@@ -46,7 +46,7 @@ function App() {
   
   //function to log user out of their account
   const logout = async () => {
-
+    await signOut(auth);
   }
   return (
     <div className="App">
@@ -64,8 +64,8 @@ function App() {
       </div>
       
       <h4>User Logged In: </h4>
-      {user.email}
-      <button>Sign Out</button>
+      {user?.email}
+      <button onClick = {logout}>Sign Out</button>
     </div>
   );
 }
