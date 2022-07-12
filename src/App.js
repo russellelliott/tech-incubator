@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from "react"
-import {createUserWithEmailAndPassword} from 'firebase/auth'
+import {createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+//onAuthStateChanged is trigered every time there is change in auth state
 import {auth} from "./firebase-config"
 
 function App() {
@@ -18,6 +19,12 @@ function App() {
   //login the email and password and set them
   const [loginEmail, setLoginEmail] = useState("")
   const [loginPassword, setLoginPassword] = useState("")
+
+  //state for the current user so it persists across user sessions
+  const [user, setUser] = useState({});
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  })
 
   //function to register, login, and logout are async await, because they deal with firebase stuff inside
 
@@ -57,7 +64,7 @@ function App() {
       </div>
       
       <h4>User Logged In: </h4>
-      {auth.currentUser.email}
+      {user.email}
       <button>Sign Out</button>
     </div>
   );
