@@ -55,8 +55,9 @@ function App() {
         <input placeholder = "Password..." onChange={(event) => {setLoginPassword(event.target.value)}}></input>
         <button>Login</button>
       </div>
-
+      
       <h4>User Logged In: </h4>
+      {auth.currentUser.email}
       <button>Sign Out</button>
     </div>
   );
