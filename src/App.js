@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from "react"
-import {createUserWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth'
+import {useEffect} from 'react'
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth'
 //onAuthStateChanged is trigered every time there is change in auth state
 import {auth} from "./firebase-config"
 
@@ -22,9 +23,16 @@ function App() {
 
   //state for the current user so it persists across user sessions
   const [user, setUser] = useState({});
-  onAuthStateChanged(auth, (currentUser) => {
+  /*onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
-  })
+  })*/
+  
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    });
+
+}, [])
 
   //function to register, login, and logout are async await, because they deal with firebase stuff inside
 
@@ -41,13 +49,23 @@ function App() {
 
   //function to login existing user
   const login = async () => {
-
-  }
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      console.log(user);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   
   //function to log user out of their account
   const logout = async () => {
     await signOut(auth);
-  }
+  };
+
   return (
     <div className="App">
       <div>
@@ -60,11 +78,11 @@ function App() {
         <h3>Login</h3>
         <input placeholder = "Email..." onChange={(event) => {setLoginEmail(event.target.value)}}></input>
         <input placeholder = "Password..." onChange={(event) => {setLoginPassword(event.target.value)}}></input>
-        <button>Login</button>
+        <button onClick = {login}>Login</button>
       </div>
       
       <h4>User Logged In: </h4>
-      {user?.email}
+      {user ? user.email : "Not Logged In"}
       <button onClick = {logout}>Sign Out</button>
     </div>
   );
