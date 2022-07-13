@@ -11,6 +11,10 @@ import Projects from "./Projects"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
+
+//import CreateNewPost from './Components/CreateNewPost'
+//import Posts from './Components/Post'
+
 function App() {
 
   //using "use state hooks" to get data from fields
