@@ -6,6 +6,11 @@ import {createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateC
 //onAuthStateChanged is trigered every time there is change in auth state
 import {auth} from "./firebase-config"
 
+//import Projects page
+import Projects from "./Projects"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 function App() {
 
   //using "use state hooks" to get data from fields
@@ -84,6 +89,12 @@ function App() {
       <h4>User Logged In: </h4>
       {user ? user.email : "Not Logged In"}
       <button onClick = {logout}>Sign Out</button>
+
+      <div>
+        <Projects/>
+      </div>
+
+
     </div>
   );
 }
