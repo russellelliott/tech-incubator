@@ -52,6 +52,7 @@ function App() {
       console.log(user)
     } catch(error){
       console.log(error.message); //print error to console log
+      alert(error.message);
     }
 
   };
@@ -67,6 +68,7 @@ function App() {
       console.log(user);
     } catch (error) {
       console.log(error.message);
+      alert(error.message);
     }
   };
   
